@@ -18,9 +18,9 @@ for iter = 1:num_iters
     %
 
     h = X * theta;
-    diff = h - y;
-    products = X .* diff;
-    change = sum(products) .* (alpha / m);
+    diffs = h - y;
+    products = X .* diffs;
+    change = sum(products) * alpha / m;
     theta = theta - change';
 
     % ============================================================

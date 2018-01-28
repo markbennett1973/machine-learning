@@ -14,11 +14,10 @@ J = 0;
 %               You should set J to the cost.
 
 h = X * theta;
+diffs = h - y;
+squares = diffs .* diffs;
+J = sum(squares) ./ (2 * m);
 
-diff = h - y;
-squares = diff .^ 2;
-
-J = sum(squares) / (2 * m);
 
 % =========================================================================
 
