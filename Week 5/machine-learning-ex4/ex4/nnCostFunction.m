@@ -106,36 +106,19 @@ J = J + reg;
 
 % Part 2 - gradients
 
-for t = 1:m
-  % Get the t'th training set as a vector
-  a1 = X(t, :)';
-  % add bias unit
-  a1 = [1; a1];
-  z2 = Theta1 * a1;
-  a2 = sigmoid(z2);    
-  % Add bias to a2
-  a2 = [1; a2];
+d3 = h - yMat;
 
-  z3 = Theta2 * a2;
-  a3 = sigmoid(z3);
-  
-  % Get a vector of y-values for this t
-  yt= yMat(t,:)';
-  
-  d3 = a3 - yt;
-  
-  d2 = (Theta2' * d3) .* sigmoidGradient(a2);
-  % Remove bias unit from d2
-  d2 = d2(2:end);
-  
-  % accumulate deltas
-  Theta1_grad = Theta1_grad + d2 * a1';
-  Theta2_grad = Theta2_grad + d3 * a2';
-end
+Theta2_unbiased = Theta2(:, 2:end);
+%d2 = d3 * Theta2_unbiased;
+%d2 = d2 .* sigmoidGradient(z2);
+d2 = d3 * Theta2;
+d2 = d2 .* sigmoidGradient(z2);
 
-Theta1_grad = Theta1_grad ./ m;
-Theta2_grad = Theta2_grad ./ m;
+D1 = d2' * a1;
+D2 = d3' * a2;
 
+Theta1_grad = D1/m;
+Theta2_grad = D2/m;
 
 % =========================================================================
 
