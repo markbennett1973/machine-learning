@@ -26,11 +26,17 @@ centroids = zeros(K, n);
 % Note: You can use a for-loop over the centroids to compute this.
 %
 
+centroidCounts = zeros(K, n);
+
+for row = 1:m
+  centroid = idx(row);
+  centroids(centroid, :) = centroids(centroid, :) + X(row, :);
+  centroidCounts(centroid, :) = centroidCounts(centroid, :) + 1;
+endfor
 
 
-
-
-
+% divide centroids by the number of points matching each one
+centroids = centroids ./ centroidCounts;
 
 
 % =============================================================
