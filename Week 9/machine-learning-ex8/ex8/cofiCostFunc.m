@@ -40,19 +40,31 @@ Theta_grad = zeros(size(Theta));
 %                     partial derivatives w.r.t. to each element of Theta
 %
 
+% Start by calculating the cost
+predict = X * Theta';
+diffs = predict - Y;
+% multiply element-wise to exclude diffs for unrated movies (i.e. R = 0)
+diffs = diffs .* R;
+d2 = diffs .* diffs;
+J = sum(d2(:))/2;
+
+% Add regularisation
+reg1 = Theta .* Theta;
+reg1 = sum(reg1(:)) * lambda / 2;
+
+reg2 = X .* X;
+reg2 = sum(reg2(:)) * lambda / 2;
+
+J = J + reg1 + reg2;
 
 
+% Now calculate the gradients
+X_grad = diffs * Theta;
+Theta_grad = diffs' * X;
 
-
-
-
-
-
-
-
-
-
-
+% and add regularisation
+X_grad = X_grad + (X * lambda);
+Theta_grad = Theta_grad + (Theta * lambda);
 
 
 % =============================================================
